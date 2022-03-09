@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+terraform init
+terraform plan --var-file=settings.example/common.tfvars
+terraform apply --var-file=settings.example/common.tfvars --auto-approve 
+
+echo "beacon wireguard config"
+terraform output beacon_wireguard_config | awk 'NR>1' | head -n -1 | qrencode -m 1 -s 1 -t ANSI 
+
+echo "satellite wireguard config"
+terraform output beacon_wireguard_config | awk 'NR>1' | head -n -1 | qrencode -m 1 -s 1 -t ANSI 
